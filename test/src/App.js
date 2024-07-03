@@ -1,38 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 
 
 function App() {
 
-  const [country,setCountry] = useState({
-    con:"",
-  });
+  const [country, setCountry] = useState('');
+  const [universities, setUniversities] = useState([]);
 
-  const handleSubmit = async () => {
-    try {
-      console.log(country);
-      
-    } catch (error) {
-      console.error("Error registering donator:", error);
-    }
-  };
-  const handlechange =  (e) => {
-    setCountry({...country,[e.target.name] : e.target.vale})
+  const searchByCountry = async () => {
+    const response = await fetch(`http://universities.hipolabs.com/search?country=${country}`);
+    const data = await response.json();
+    setUniversities(data);
+    console.log(universities)
   };
 
+  
   return (
     <div className="App">
-      
-      <div className="input-group">
-  <div className="form-outline" data-mdb-input-init>
-    <input type="search" id="form1" className="form-control" value={country} onChange={handlechange}/>
-    <label className="form-label" for="form1">Search</label>
-  </div>
-  <button onClick={handleSubmit} type="button" className="btn btn-primary" data-mdb-ripple-init>
-    search
-  </button>
-</div>
+      <h1>University Search</h1>
+      <input
+        type="text"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
+        placeholder="Enter country name"
+      />
+      <button onClick={searchByCountry}>Search</button>
+      <div className="university-cards">
+        {universities.map((uni, index) => (
+          <div className="card" key={index}>
+            <h2>{uni.name}</h2>
+            <a href={uni.web_pages[0]} target="_blank" rel="noopener noreferrer">
+              {uni.web_pages[0]}
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
