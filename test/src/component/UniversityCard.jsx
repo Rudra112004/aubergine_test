@@ -3,7 +3,7 @@ import html2canvas from 'html2canvas';
 
 
 const UniversityCard = ({ university, index }) => {
-  const downloadCardAsImage = async () => {
+  const downloadcard = async () => {
     const cardElement = document.getElementById(`card-${index}`);
     const canvas = await html2canvas(cardElement);
     const imgData = canvas.toDataURL('image/jpeg');
@@ -21,6 +21,9 @@ const UniversityCard = ({ university, index }) => {
           <a href={university.web_pages[0]} target="_blank" rel="noopener noreferrer" className="card-link">
             {university.web_pages[0]}
           </a>
+        </div>
+        <div className="card-footer">
+          <button className="btn btn-primary w-100" onClick={downloadcard}>Download JPEG</button>
         </div>
       </div>
     </div>
