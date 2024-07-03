@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import UniversityCard from './component/UniversityCard';
 
 
 function App() {
@@ -25,15 +26,12 @@ function App() {
         placeholder="Enter country name"
       />
       <button onClick={searchByCountry}>Search</button>
-      <div className="university-cards">
+      <div>
+        {<div className="row">
         {universities.map((uni, index) => (
-          <div className="card" key={index}>
-            <h2>{uni.name}</h2>
-            <a href={uni.web_pages[0]} target="_blank" rel="noopener noreferrer">
-              {uni.web_pages[0]}
-            </a>
-          </div>
+          <UniversityCard key={index} university={uni} index={index}/>
         ))}
+      </div>}
       </div>
     </div>
   );
